@@ -6,5 +6,5 @@ package testtools.beantester.internal;
  * @author stuartdd
  */
 public interface Creator {
-    Object create(Class parameterType, String beanName, String propertyName);
+    Object create(Class classUnderTest, String propertyName);
 }

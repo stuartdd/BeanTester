@@ -17,7 +17,7 @@ public class ValueSequence implements Creator {
     }
     
     @Override
-    public Object create(Class parameterType, String beanName, String propertyName) {
+    public Object create(Class classUnderTest, String propertyName) {
         if ((valueOrCreatorList == null) || (valueOrCreatorList.length == 0)) {
             return null;
         }

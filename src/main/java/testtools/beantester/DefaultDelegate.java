@@ -18,60 +18,64 @@ public class DefaultDelegate implements Creator {
         return s.addValueOrCreator(null, new String[]{propertyName}, valueOrCreator);
     }
 
-    public static DefaultDelegate with(String beanName, String propertyName, Object valueOrCreator) {
+    public static DefaultDelegate with(Class classUnderTest, String propertyName, Object valueOrCreator) {
         DefaultDelegate s = new DefaultDelegate();
-        return s.addValueOrCreator(beanName, new String[]{propertyName}, valueOrCreator);
+        return s.addValueOrCreator(classUnderTest, new String[]{propertyName}, valueOrCreator);
     }
 
-    public static DefaultDelegate with(String[] propertyName, Object valueOrCreator) {
+    public static DefaultDelegate with(String[] propertyNameList, Object valueOrCreator) {
         DefaultDelegate s = new DefaultDelegate();
-        return s.addValueOrCreator(null, propertyName, valueOrCreator);
+        return s.addValueOrCreator(null, propertyNameList, valueOrCreator);
     }
 
-    public static DefaultDelegate with(String beanName, String[] propertyName, Object valueOrCreator) {
+    public static DefaultDelegate with(Class classUnderTest, String[] propertyNameList, Object valueOrCreator) {
         DefaultDelegate s = new DefaultDelegate();
-        return s.addValueOrCreator(beanName, propertyName, valueOrCreator);
+        return s.addValueOrCreator(classUnderTest, propertyNameList, valueOrCreator);
     }
 
     public DefaultDelegate and(String propertyName, Object valueOrCreator) {
         return addValueOrCreator(null, new String[]{propertyName}, valueOrCreator);
     }
 
-    public DefaultDelegate and(String beanName, String propertyName, Object valueOrCreator) {
-        return addValueOrCreator(beanName, new String[]{propertyName}, valueOrCreator);
+    public DefaultDelegate and(Class classUnderTest, String propertyName, Object valueOrCreator) {
+        return addValueOrCreator(classUnderTest, new String[]{propertyName}, valueOrCreator);
     }
 
-    public DefaultDelegate and(String[] propertyName, Object valueOrCreator) {
-        return addValueOrCreator(null, propertyName, valueOrCreator);
+    public DefaultDelegate and(String[] propertyNameList, Object valueOrCreator) {
+        return addValueOrCreator(null, propertyNameList, valueOrCreator);
     }
 
-    public DefaultDelegate and(String beanName, String[] propertyName, Object valueOrCreator) {
-        return addValueOrCreator(beanName, propertyName, valueOrCreator);
+    public DefaultDelegate and(Class classUnderTest, String[] propertyNameList, Object valueOrCreator) {
+        return addValueOrCreator(classUnderTest, propertyNameList, valueOrCreator);
     }
 
-    protected DefaultDelegate addValueOrCreator(String beanName, String[] propertyName, Object valueOrCreator) {
-        for (String p : propertyName) {
-            map.put((beanName == null ? "" : beanName + '.') + p, valueOrCreator);
+    protected DefaultDelegate addValueOrCreator(Class classUnderTest, String[] propertyNameList, Object valueOrCreator) {
+        for (String propertyName : propertyNameList) {
+            map.put(genPropertyName(classUnderTest, propertyName), valueOrCreator);
         }
         return this;
     }
 
     @Override
-    public Object create(Class parameterType, String beanName, String propertyName) {
-        Object valueOrCreator = map.get((beanName == null ? "" : beanName + '.') + propertyName);
+    public Object create(Class classUnderTest, String propertyName) {
+        Object valueOrCreator = map.get(genPropertyName(classUnderTest, propertyName));
         if (valueOrCreator == null) {
             valueOrCreator = map.get(propertyName);
         }
-        return getFinalCreatedValue(valueOrCreator, parameterType, beanName, propertyName);
+        return getFinalCreatedValue(valueOrCreator, classUnderTest, propertyName);
     }
 
-    private Object getFinalCreatedValue(Object valueOrCreator, Class parameterType, String beanName, String propertyName) {
+    private Object getFinalCreatedValue(Object valueOrCreator, Class classUnderTest, String propertyName) {
         if (valueOrCreator == null) {
             return null;
         }
         if (valueOrCreator instanceof Creator) {
-            return getFinalCreatedValue(((Creator) valueOrCreator).create(parameterType, beanName, propertyName), parameterType, beanName, propertyName);
+            return getFinalCreatedValue(((Creator) valueOrCreator).create(classUnderTest, propertyName), classUnderTest, propertyName);
         }
         return valueOrCreator;
+    }
+    
+    private String genPropertyName(Class classUnderTest, String propertyName) {
+        return (classUnderTest == null ? "" : classUnderTest.getSimpleName() + (propertyName == null?"":".")) + (propertyName == null?"":propertyName);
     }
 }

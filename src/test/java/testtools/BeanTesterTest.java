@@ -31,7 +31,7 @@ public class BeanTesterTest {
 
         try {
             BeanTester.testBean(ComplexBean.class, sb,
-                    DefaultDelegate.with("TypicalBean", "value", "222222222222222").and("typicalBean", typicalBeanPrimitive)
+                    DefaultDelegate.with(TypicalBean.class, "value", "222222222222222").and("typicalBean", typicalBeanPrimitive)
             );
             fail("Must throw an Exception");
         } catch (BeanTestFailException bte) {
@@ -49,7 +49,7 @@ public class BeanTesterTest {
         typicalBeanPrimitive.setName("12345");
         typicalBeanPrimitive.setValue(-999999999);
         ComplexBean complexBean = (ComplexBean) BeanTester.testBean(ComplexBean.class, sb,
-                DefaultDelegate.with("TypicalBean", "value", "222222222222222").and("typicalBeanPrimitive", typicalBeanPrimitive)
+                DefaultDelegate.with(TypicalBean.class, "value", "222222222222222").and("typicalBeanPrimitive", typicalBeanPrimitive)
         );
         System.out.println(sb);
         assertEquals("ComplexBean{setName()|getName()|setTypicalBean()|getTypicalBean()|setTypicalBeanPrimitive()|getTypicalBeanPrimitive()|}\n"

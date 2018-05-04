@@ -167,7 +167,7 @@ public class BeanTester {
 
     private static Object createParameter(Class parameterClass, Class classUnderTest, String propertyName, Creator creator, StringBuilder sb, int indent) {
         if (creator != null) {
-            Object created = creator.create(parameterClass, classUnderTest.getSimpleName(), propertyName);
+            Object created = creator.create(classUnderTest, propertyName);
             if (created != null) {
                 if (sb != null) {
                     sb.append(SEP).append(NL).append(tab(indent + 2)).append("DELEGATE RETURNED:").append(SEP).append(created.getClass().getName());
