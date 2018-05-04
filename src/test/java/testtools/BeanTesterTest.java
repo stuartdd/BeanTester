@@ -1,14 +1,14 @@
-package com.bt.testtools;
+package testtools;
 
-import com.bt.testtools.beantester.internal.BeanTestFailException;
-import com.bt.testtools.beantester.BeanTester;
-import com.bt.testtools.beantester.internal.BeanTesterException;
-import com.bt.testtools.beantester.DefaultDelegate;
-import com.bt.testtools.beantester.internal.MethodPair;
+import testtools.beantester.internal.BeanTestFailException;
+import testtools.beantester.BeanTester;
+import testtools.beantester.internal.BeanTesterException;
+import testtools.beantester.DefaultDelegate;
+import testtools.beantester.internal.MethodPair;
 
 import java.util.Map;
 
-import com.bt.testtools.testBeans.*;
+import testtools.testBeans.*;
 import org.testng.annotations.Test;
 
 import static org.testng.AssertJUnit.assertEquals;
@@ -30,7 +30,7 @@ public class BeanTesterTest {
             );
             fail("Must throw an Exception");
         } catch (BeanTestFailException bte) {
-            assertEquals("Cannot invoke setTypicalBean(class com.bt.testtools.testBeans.TypicalBean) where parameter is :com.bt.testtools.testBeans.TypicalBeanPrimitive", bte.getMessage());
+            assertEquals("Cannot invoke setTypicalBean(class testtools.testBeans.TypicalBean) where parameter is :testtools.testBeans.TypicalBeanPrimitive", bte.getMessage());
         } catch (Throwable any) {
             fail("Threw an :" + any.getClass().getName() + " exception. Message is :" + any.getMessage());
         }

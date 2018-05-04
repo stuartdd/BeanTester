@@ -1,4 +1,4 @@
-package com.bt.testtools.testBeans;
+package testtools.testBeans;
 
 public class TypicalBean {
     private final StringBuilder log = new StringBuilder();

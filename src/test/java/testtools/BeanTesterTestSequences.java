@@ -1,6 +1,6 @@
-package com.bt.testtools;
+package testtools;
 
-import com.bt.testtools.beantester.ValueSequence;
+import testtools.beantester.ValueSequence;
 import static org.testng.Assert.*;
 import org.testng.annotations.Test;
 

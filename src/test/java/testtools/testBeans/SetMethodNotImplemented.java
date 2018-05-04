@@ -1,15 +1,16 @@
-package com.bt.testtools.testBeans;
+package testtools.testBeans;
 
-public class ReturnNullFromGet {
+public class SetMethodNotImplemented {
+
     private String name;
     private String value;
 
     public String getName() {
-        return null;
+        return name;
     }
 
     public void setName(String name) {
-        this.name = name;
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     public String getValue() {
@@ -19,5 +20,4 @@ public class ReturnNullFromGet {
     public void setValue(String value) {
         this.value = value;
     }
-
 }

@@ -1,4 +1,4 @@
-package com.bt.testtools.beantester.internal;
+package testtools.beantester.internal;
 
 import java.lang.reflect.Method;
 

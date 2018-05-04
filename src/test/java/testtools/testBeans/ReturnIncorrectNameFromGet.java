@@ -1,16 +1,15 @@
-package com.bt.testtools.testBeans;
+package testtools.testBeans;
 
-public class SetMethodNotImplemented {
-
+public class ReturnIncorrectNameFromGet {
     private String name;
     private String value;
 
     public String getName() {
-        return name;
+        return "ABCDE";
     }
 
     public void setName(String name) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        this.name = name;
     }
 
     public String getValue() {

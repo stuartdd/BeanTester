@@ -1,7 +1,7 @@
-package com.bt.testtools;
+package testtools;
 
-import com.bt.testtools.beantester.DefaultDelegate;
-import com.bt.testtools.testBeans.TypicalBean;
+import testtools.beantester.DefaultDelegate;
+import testtools.testBeans.TypicalBean;
 import static org.testng.Assert.*;
 import org.testng.annotations.Test;
 

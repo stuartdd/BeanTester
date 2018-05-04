@@ -1,4 +1,4 @@
-package com.bt.testtools.beantester.internal;
+package testtools.beantester.internal;
 
 public class BeanTestFailException extends RuntimeException {
     public BeanTestFailException(String message) {

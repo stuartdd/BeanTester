@@ -1,6 +1,6 @@
-package com.bt.testtools.beantester;
+package testtools.beantester;
 
-import com.bt.testtools.beantester.internal.Creator;
+import testtools.beantester.internal.Creator;
 
 /**
  *

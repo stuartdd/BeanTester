@@ -1,11 +1,11 @@
-package com.bt.testtools.testBeans;
+package testtools.testBeans;
 
-public class ReturnIncorrectTypeFromGet {
+public class GetMethodNotImplemented {
     private String name;
     private String value;
 
-    public Integer getName() {
-        return new Integer("123");
+    public String getName()  {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     public void setName(String name) {
@@ -19,4 +19,5 @@ public class ReturnIncorrectTypeFromGet {
     public void setValue(String value) {
         this.value = value;
     }
+
 }

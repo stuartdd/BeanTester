@@ -1,11 +1,11 @@
-package com.bt.testtools.testBeans;
+package testtools.testBeans;
 
-public class ReturnIncorrectNameFromGet {
+public class ReturnNullFromGet {
     private String name;
     private String value;
 
     public String getName() {
-        return "ABCDE";
+        return null;
     }
 
     public void setName(String name) {
@@ -19,4 +19,5 @@ public class ReturnIncorrectNameFromGet {
     public void setValue(String value) {
         this.value = value;
     }
+
 }

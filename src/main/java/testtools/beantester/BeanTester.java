@@ -1,9 +1,9 @@
-package com.bt.testtools.beantester;
+package testtools.beantester;
 
-import com.bt.testtools.beantester.internal.Creator;
-import com.bt.testtools.beantester.internal.BeanTesterException;
-import com.bt.testtools.beantester.internal.MethodPair;
-import com.bt.testtools.beantester.internal.BeanTestFailException;
+import testtools.beantester.internal.Creator;
+import testtools.beantester.internal.BeanTesterException;
+import testtools.beantester.internal.MethodPair;
+import testtools.beantester.internal.BeanTestFailException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
