@@ -1,0 +1,21 @@
+
+apply plugin: 'java'
+
+version = '1.0'
+sourceCompatibility = '1.8'
+
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+test {
+    useTestNG {
+    }
+}
+
+dependencies {
+    compile 'org.testng:testng:6.14.2'
+}
