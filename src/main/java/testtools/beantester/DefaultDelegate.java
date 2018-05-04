@@ -4,6 +4,11 @@ import testtools.beantester.internal.Creator;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Java Bean Tester library May 2018
+ * GitHub "https://github.com/stuartdd/beanUnitTester"
+ * @author stuartdd
+ */
 public class DefaultDelegate implements Creator {
 
     private final Map<String, Object> map = new HashMap<>();

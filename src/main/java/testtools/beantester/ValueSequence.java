@@ -3,8 +3,9 @@ package testtools.beantester;
 import testtools.beantester.internal.Creator;
 
 /**
- *
- * @author stuart
+ * Java Bean Tester library May 2018
+ * GitHub "https://github.com/stuartdd/beanUnitTester"
+ * @author stuartdd
  */
 public class ValueSequence implements Creator {
     private final Object[] valueOrCreatorList;

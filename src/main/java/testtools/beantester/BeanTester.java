@@ -2,12 +2,16 @@ package testtools.beantester;
 
 import testtools.beantester.internal.Creator;
 import testtools.beantester.internal.BeanTesterException;
-import testtools.beantester.internal.MethodPair;
+import testtools.beantester.internal.MethodData;
 import testtools.beantester.internal.BeanTestFailException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
-
+/**
+ * Java Bean Tester library May 2018
+ * GitHub "https://github.com/stuartdd/beanUnitTester"
+ * @author stuartdd
+ */
 public class BeanTester {
 
     private static final String NL = System.getProperty("line.separator");
@@ -92,7 +96,7 @@ public class BeanTester {
         }
 
         Object objectUnderTest = createObject(classUnderTest);
-        Map<String, MethodPair> map = getPairs(classUnderTest);
+        Map<String, MethodData> map = getPairs(classUnderTest);
         if (map.isEmpty()) {
             if (sb != null) {
                 sb.append("No setter/getter methods found:").append(classUnderTest.getName());
@@ -100,7 +104,7 @@ public class BeanTester {
             return objectUnderTest;
         }
 
-        for (MethodPair mp : map.values()) {
+        for (MethodData mp : map.values()) {
             if (sb != null) {
                 sb.append(tab(1)).append(tab(indent)).append("NAME:").append(mp.getPropertyName()).append(SEP).append("TYPE:").append(mp.getPropertyType().getName());
             }
@@ -238,8 +242,8 @@ public class BeanTester {
         return (Math.random() * max) * (Math.random() > 0.5 ? 1 : -1);
     }
 
-    public static Map<String, MethodPair> getPairs(Class clazz) {
-        Map<String, MethodPair> propertyMethods = new TreeMap<>();
+    public static Map<String, MethodData> getPairs(Class clazz) {
+        Map<String, MethodData> propertyMethods = new TreeMap<>();
         for (Method m : clazz.getMethods()) {
             String methodName = m.getName();
             if ((methodName.startsWith("set") && (m.getParameterTypes().length == 1))) {
@@ -247,7 +251,7 @@ public class BeanTester {
                 String propertyName = propertyNameCaps.substring(0, 1).toLowerCase() + propertyNameCaps.substring(1);
                 Method getMethod = findGetMethod(clazz, propertyNameCaps);
                 if (getMethod != null) {
-                    propertyMethods.put(propertyName, new MethodPair(m, getMethod, propertyName));
+                    propertyMethods.put(propertyName, new MethodData(m, getMethod, propertyName));
                 }
             }
         }

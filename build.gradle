@@ -1,4 +1,8 @@
-
+/**
+ * Java Bean Tester library May 2018
+ * GitHub "https://github.com/stuartdd/beanUnitTester"
+ * @author stuartdd
+ */
 apply plugin: 'java'
 
 version = '1.0'

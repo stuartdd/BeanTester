@@ -2,13 +2,18 @@ package testtools.beantester.internal;
 
 import java.lang.reflect.Method;
 
-public class MethodPair {
-    private String propertyName;
-    private Method set;
-    private Method get;
-    private Class propertyType;
+/**
+ * Java Bean Tester library May 2018
+ * GitHub "https://github.com/stuartdd/beanUnitTester"
+ * @author stuartdd
+ */
+public class MethodData {
+    private final String propertyName;
+    private final Method set;
+    private final Method get;
+    private final Class propertyType;
 
-    public MethodPair(Method set, Method get, String propertyName) {
+    public MethodData(Method set, Method get, String propertyName) {
         this.set = set;
         this.get = get;
         this.propertyType = set.getParameterTypes()[0];

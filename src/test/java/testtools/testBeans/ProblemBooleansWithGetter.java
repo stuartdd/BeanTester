@@ -1,5 +1,10 @@
 package testtools.testBeans;
 
+/**
+ * Java Bean Tester library May 2018
+ * GitHub "https://github.com/stuartdd/beanUnitTester"
+ * @author stuartdd
+ */
 public class ProblemBooleansWithGetter {
         private final StringBuilder log = new StringBuilder();
         private boolean booleanPrimitive;

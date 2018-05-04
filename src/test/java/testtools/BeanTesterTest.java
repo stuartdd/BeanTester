@@ -4,7 +4,7 @@ import testtools.beantester.internal.BeanTestFailException;
 import testtools.beantester.BeanTester;
 import testtools.beantester.internal.BeanTesterException;
 import testtools.beantester.DefaultDelegate;
-import testtools.beantester.internal.MethodPair;
+import testtools.beantester.internal.MethodData;
 
 import java.util.Map;
 
@@ -15,6 +15,11 @@ import static org.testng.AssertJUnit.assertEquals;
 import static org.testng.AssertJUnit.assertNotNull;
 import static org.testng.AssertJUnit.fail;
 
+/**
+ * Java Bean Tester library May 2018
+ * GitHub "https://github.com/stuartdd/beanUnitTester"
+ * @author stuartdd
+ */
 public class BeanTesterTest {
 
     @Test
@@ -118,8 +123,8 @@ public class BeanTesterTest {
 
     @Test
     public void testBeanWithObjects() {
-        Map<String, MethodPair> methods = BeanTester.getPairs(TypicalBean.class);
-        for (MethodPair mp : methods.values()) {
+        Map<String, MethodData> methods = BeanTester.getPairs(TypicalBean.class);
+        for (MethodData mp : methods.values()) {
             echo(mp);
         }
         assertEquals(2, methods.size());
@@ -131,8 +136,8 @@ public class BeanTesterTest {
 
     @Test
     public void testBeanWithPrimitive() {
-        Map<String, MethodPair> methods = BeanTester.getPairs(TypicalBeanPrimitive.class);
-        for (MethodPair mp : methods.values()) {
+        Map<String, MethodData> methods = BeanTester.getPairs(TypicalBeanPrimitive.class);
+        for (MethodData mp : methods.values()) {
             echo(mp);
         }
         assertEquals(2, methods.size());
