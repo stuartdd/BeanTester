@@ -1,2 +1,2 @@
-# BeanTester
+# beanUnitTester
 Test Java Beans
