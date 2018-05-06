@@ -62,7 +62,7 @@ public class BeanTesterTest {
         ComplexBean complexBean = (ComplexBean) BeanTester.testBean(ComplexBean.class);
         assertEquals("ComplexBean{setName()|getName()|setTypicalBean()|getTypicalBean()|setTypicalBeanPrimitive()|getTypicalBeanPrimitive()|}\n"
                 + "   TypicalBean{setName()|getName()|setValue()|getValue()|}\n"
-                + "   TypicalBeanPrimitive{setName()|getName()|setValue()|getValue()|}", complexBean.toString());
+                + "   TypicalBeanPrimitive{setCount()|getCount()|setIndex()|getIndex()|setName()|getName()|setValue()|getValue()|}", complexBean.toString());
     }
 
     @Test
@@ -116,7 +116,7 @@ public class BeanTesterTest {
     @Test
     public void testBeanPass() {
         TypicalBeanPrimitive typicalBeanPrimitive = (TypicalBeanPrimitive) BeanTester.testBean(TypicalBeanPrimitive.class);
-        assertEquals("TypicalBeanPrimitive{setName()|getName()|setValue()|getValue()|}", typicalBeanPrimitive.toString());
+        assertEquals("TypicalBeanPrimitive{setCount()|getCount()|setIndex()|getIndex()|setName()|getName()|setValue()|getValue()|}", typicalBeanPrimitive.toString());
         TypicalBean typicalBean = (TypicalBean) BeanTester.testBean(TypicalBean.class);
         assertEquals("TypicalBean{setName()|getName()|setValue()|getValue()|}", typicalBean.toString());
     }
@@ -140,7 +140,7 @@ public class BeanTesterTest {
         for (MethodData mp : methods.values()) {
             echo(mp);
         }
-        assertEquals(2, methods.size());
+        assertEquals(4, methods.size());
         assertNotNull(methods.get("name"));
         assertNotNull(methods.get("value"));
         assertEquals(String.class.getName(), methods.get("name").getPropertyType().getName());

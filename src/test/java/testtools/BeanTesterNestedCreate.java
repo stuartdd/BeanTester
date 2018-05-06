@@ -21,20 +21,28 @@ public class BeanTesterNestedCreate {
     Object[] objOne = new Object[]{"ONE"};
     Object[] objTwo = new Object[]{"ONE", "TWO"};
     Object[] objFour = new Object[]{"ONE", null, "THREE", null};
-    Long[] intSeq = new Long[]{2l,4l,6l,8l,0l};
+    Long[] intSeq = new Long[]{2L, 4L};
 
     DefaultDelegate ddWithAnyClass = DefaultDelegate.with("name", "Stuart");
     DefaultDelegate ddWithDefinedClass = DefaultDelegate.with(TypicalBean.class, "name", "Stuart");
 
-        @Test
-    public void testComplex() {
+    
+    @Test void testLists() {
+        
+    }
+    @Test
+    public void testIntSequence() {
         StringBuilder sb = new StringBuilder();
-                
-        BeanTester.testBean(ComplexBean.class, sb, DefaultDelegate.
+        ComplexBean cb = (ComplexBean) BeanTester.testBean(ComplexBean.class, sb, DefaultDelegate.
                 with("typicalBean", BeanTester.testBean(TypicalBean.class, sb)).
-                and("typicalBeanPrimitive", BeanTester.testBean(TypicalBeanPrimitive.class, sb, 
-                        DefaultDelegate.with("value", new ValueSequence(intSeq)))));
-            System.out.println(sb);
+                and("typicalBeanPrimitive", BeanTester.testBean(TypicalBeanPrimitive.class, sb,
+                        DefaultDelegate.with(new String[] {"value","count","index"}, new ValueSequence(intSeq)))));
+                System.out.println(sb);
+        System.out.println(sb);
+
+        assertEquals(2, cb.getTypicalBeanPrimitive().getCount());
+        assertEquals(4, cb.getTypicalBeanPrimitive().getIndex());
+        assertEquals(2, cb.getTypicalBeanPrimitive().getValue());
     }
 
     @Test

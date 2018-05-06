@@ -9,6 +9,8 @@ public class TypicalBeanPrimitive {
     private final StringBuilder log = new StringBuilder();
     private String name;
     private long value = Long.MIN_VALUE;
+    private long count = Long.MIN_VALUE;
+    private long index = Long.MIN_VALUE;
 
     public String getName() {
         log.append(name == null ? "null-" : "").append("getName()|");
@@ -30,6 +32,27 @@ public class TypicalBeanPrimitive {
         this.value = value;
     }
 
+    public long getCount() {
+        log.append("getCount()|");
+        return count;
+    }
+
+    public void setCount(long count) {
+        log.append("setCount()|");
+        this.count = count;
+    }
+
+    public long getIndex() {
+        log.append("getIndex()|");
+        return index;
+    }
+
+    public void setIndex(long index) {
+        log.append("setIndex()|");
+        this.index = index;
+    }
+
+    
     @Override
     public String toString() {
         return "TypicalBeanPrimitive{" + log + '}';
