@@ -4,6 +4,9 @@ import testtools.beantester.DefaultDelegate;
 import testtools.testBeans.TypicalBean;
 import static org.testng.Assert.*;
 import org.testng.annotations.Test;
+import testtools.beantester.BeanTester;
+import testtools.beantester.ValueSequence;
+import testtools.testBeans.ComplexBean;
 import testtools.testBeans.TypicalBeanPrimitive;
 
 /**
@@ -18,9 +21,21 @@ public class BeanTesterNestedCreate {
     Object[] objOne = new Object[]{"ONE"};
     Object[] objTwo = new Object[]{"ONE", "TWO"};
     Object[] objFour = new Object[]{"ONE", null, "THREE", null};
+    Long[] intSeq = new Long[]{2l,4l,6l,8l,0l};
 
     DefaultDelegate ddWithAnyClass = DefaultDelegate.with("name", "Stuart");
     DefaultDelegate ddWithDefinedClass = DefaultDelegate.with(TypicalBean.class, "name", "Stuart");
+
+        @Test
+    public void testComplex() {
+        StringBuilder sb = new StringBuilder();
+                
+        BeanTester.testBean(ComplexBean.class, sb, DefaultDelegate.
+                with("typicalBean", BeanTester.testBean(TypicalBean.class, sb)).
+                and("typicalBeanPrimitive", BeanTester.testBean(TypicalBeanPrimitive.class, sb, 
+                        DefaultDelegate.with("value", new ValueSequence(intSeq)))));
+            System.out.println(sb);
+    }
 
     @Test
     public void testCreateTypicalBean() {
