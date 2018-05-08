@@ -191,7 +191,7 @@ public class BeanTester {
         }
         int type = getTypeForClass(parameterClass);
         if (type != TYPE_UNDEFINED) {
-            return createManagedType(type, parameterClass);
+            return createManagedType(type, parameterClass, creator, sb, indent);
         }
         return testBean(parameterClass, sb, creator, indent + 1);
     }
@@ -203,12 +203,16 @@ public class BeanTester {
             throw new BeanTesterException("Cannot instantiate bean using default constructor:" + clazz.getName(), e);
         }
     }
-
+    
     public static Object createManagedType(int type) {
-        return createManagedType(type, null);
+        return createManagedType(type, null, null, null, 0);
+    }
+
+    public static Object createManagedType(int type, Creator creator, StringBuilder sb, int indent) {
+        return createManagedType(type, null, creator, sb, indent);
     }
     
-    public static Object createManagedType(int type, Class subClass) {
+    public static Object createManagedType(int type, Class subClass, Creator creator, StringBuilder sb, int indent) {
         switch (type) {
             case TYPE_STRING:
                 return "Str:" + Math.random();
@@ -237,12 +241,12 @@ public class BeanTester {
             case TYPE_TREE_MAP:
                 return new TreeMap<>();
             case TYPE_ARRAY:
-                return createManagedTypeArray(type, subClass);
+                return createManagedTypeArray(type, subClass, creator, sb, indent);
         }
         return null;
     }
 
-    public static Object[] createManagedTypeArray(int type, Class subClass) {
+    public static Object[] createManagedTypeArray(int type, Class subClass, Creator creator, StringBuilder sb, int indent) {
         if (subClass == null) {
             return null;
         }
