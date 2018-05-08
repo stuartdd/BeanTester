@@ -7,6 +7,7 @@ import org.testng.annotations.Test;
 import testtools.beantester.BeanTester;
 import testtools.beantester.ValueSequence;
 import testtools.testBeans.ComplexBean;
+import testtools.testBeans.ListWithNameValue;
 import testtools.testBeans.TypicalBeanPrimitive;
 
 /**
@@ -26,18 +27,20 @@ public class BeanTesterNestedCreate {
     DefaultDelegate ddWithAnyClass = DefaultDelegate.with("name", "Stuart");
     DefaultDelegate ddWithDefinedClass = DefaultDelegate.with(TypicalBean.class, "name", "Stuart");
 
-    
-    @Test void testLists() {
-        
+    @Test
+    public void testLists() {
+        ListWithNameValue lwnv = (ListWithNameValue) BeanTester.testBean(ListWithNameValue.class);
+        System.out.println(lwnv);
     }
+
     @Test
     public void testIntSequence() {
         StringBuilder sb = new StringBuilder();
         ComplexBean cb = (ComplexBean) BeanTester.testBean(ComplexBean.class, sb, DefaultDelegate.
                 with("typicalBean", BeanTester.testBean(TypicalBean.class, sb)).
                 and("typicalBeanPrimitive", BeanTester.testBean(TypicalBeanPrimitive.class, sb,
-                        DefaultDelegate.with(new String[] {"value","count","index"}, new ValueSequence(intSeq)))));
-                System.out.println(sb);
+                        DefaultDelegate.with(new String[]{"value", "count", "index"}, new ValueSequence(intSeq)))));
+        System.out.println(sb);
         System.out.println(sb);
 
         assertEquals(2, cb.getTypicalBeanPrimitive().getCount());

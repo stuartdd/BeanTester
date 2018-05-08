@@ -15,7 +15,11 @@ import java.util.List;
 public class ListWithNameValue {
     private String name;
     private long value;
-    private List<TypicalBean> list = new ArrayList<>();
+    private List<TypicalBean> beanlist;
+    private List<Integer> primitiveList;
+    
+    private TypicalBean[] beanArray;
+    private int[] primitiveArray;
 
     public String getName() {
         return name;
@@ -33,13 +37,37 @@ public class ListWithNameValue {
         this.value = value;
     }
 
-    public List<TypicalBean> getList() {
-        return list;
+    public List<TypicalBean> getBeanlist() {
+        return beanlist;
     }
 
-    public void setList(List<TypicalBean> list) {
-        this.list = list;
+    public void setBeanlist(List<TypicalBean> beanlist) {
+        this.beanlist = beanlist;
     }
-    
+
+    public List<Integer> getPrimitiveList() {
+        return primitiveList;
+    }
+
+    public void setPrimitiveList(List<Integer> primitiveList) {
+        this.primitiveList = primitiveList;
+    }
+
+    public TypicalBean[] getBeanArray() {
+        return beanArray;
+    }
+
+    public void setBeanArray(TypicalBean[] beanArray) {
+        this.beanArray = beanArray;
+    }
+
+    public int[] getPrimitiveArray() {
+        return primitiveArray;
+    }
+
+    public void setPrimitiveArray(int[] primitiveArray) {
+        this.primitiveArray = primitiveArray;
+    }
+
     
 }

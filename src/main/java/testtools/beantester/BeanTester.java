@@ -7,9 +7,11 @@ import testtools.beantester.internal.BeanTestFailException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
+
 /**
- * Java Bean Tester library May 2018
- * GitHub "https://github.com/stuartdd/beanUnitTester"
+ * Java Bean Tester library May 2018 GitHub
+ * "https://github.com/stuartdd/beanUnitTester"
+ *
  * @author stuartdd
  */
 public class BeanTester {
@@ -37,6 +39,7 @@ public class BeanTester {
     private static final int TYPE_CALENDAR = 10;
     private static final int TYPE_MAP = 11;
     private static final int TYPE_TREE_MAP = 12;
+    private static final int TYPE_ARRAY = 99;
 
     private static final Map<String, Integer> managedTypes = new HashMap<>();
 
@@ -67,11 +70,22 @@ public class BeanTester {
         managedTypes.put(java.util.TreeMap.class.getName(), TYPE_TREE_MAP);
     }
 
-    public static int getTypeForClass(Class clazz) {
-        if (managedTypes.containsKey(clazz.getName())) {
-            return managedTypes.get(clazz.getName());
+    public static int getTypeForClassName(String className) {
+        if (managedTypes.containsKey(className)) {
+            return managedTypes.get(className);
         }
         return TYPE_UNDEFINED;
+    }
+
+    public static int getTypeForArray(Class clazz) {
+        return getTypeForClass(clazz.getComponentType());
+    }
+
+    public static int getTypeForClass(Class clazz) {
+        if (clazz.isArray()) {
+            return TYPE_ARRAY;
+        }
+        return getTypeForClassName(clazz.getName());
     }
 
     public static Object testBean(Class clazz) {
@@ -175,9 +189,9 @@ public class BeanTester {
                 return created;
             }
         }
-        Integer type = managedTypes.get(parameterClass.getName());
-        if (type != null) {
-            return createManagedType(type);
+        int type = getTypeForClass(parameterClass);
+        if (type != TYPE_UNDEFINED) {
+            return createManagedType(type, parameterClass);
         }
         return testBean(parameterClass, sb, creator, indent + 1);
     }
@@ -191,6 +205,10 @@ public class BeanTester {
     }
 
     public static Object createManagedType(int type) {
+        return createManagedType(type, null);
+    }
+    
+    public static Object createManagedType(int type, Class subClass) {
         switch (type) {
             case TYPE_STRING:
                 return "Str:" + Math.random();
@@ -218,8 +236,24 @@ public class BeanTester {
                 return new HashMap<>();
             case TYPE_TREE_MAP:
                 return new TreeMap<>();
+            case TYPE_ARRAY:
+                return createManagedTypeArray(type, subClass);
         }
         return null;
+    }
+
+    public static Object[] createManagedTypeArray(int type, Class subClass) {
+        if (subClass == null) {
+            return null;
+        }
+        Object[] returnArray = new Object[2];
+        int arrayType = getTypeForArray(subClass);
+        if (arrayType != TYPE_UNDEFINED) {
+            for (int i = 0; i<= returnArray.length; i++) {
+                returnArray[i] = testBean(subClass.getComponentType(), sb, creator, indent + 1);
+            }
+        }
+        return returnArray;
     }
 
     private static int unSignedIntInRange(int max) {
