@@ -1,5 +1,6 @@
 package testtools.beantester;
 
+import java.lang.reflect.Array;
 import testtools.beantester.internal.Creator;
 import testtools.beantester.internal.BeanTesterException;
 import testtools.beantester.internal.MethodData;
@@ -41,51 +42,33 @@ public class BeanTester {
     private static final int TYPE_TREE_MAP = 12;
     private static final int TYPE_ARRAY = 99;
 
-    private static final Map<String, Integer> managedTypes = new HashMap<>();
+    private static final Map<String, Integer> MANAGED_TYPES = new HashMap<>();
 
     static {
-        managedTypes.put(String.class.getName(), TYPE_STRING);
-        managedTypes.put(byte.class.getName(), TYPE_BYTE);
-        managedTypes.put(Byte.class.getName(), TYPE_BYTE);
-        managedTypes.put(char.class.getName(), TYPE_CHAR);
-        managedTypes.put(Character.class.getName(), TYPE_CHAR);
-        managedTypes.put(short.class.getName(), TYPE_SHORT);
-        managedTypes.put(Short.class.getName(), TYPE_SHORT);
-        managedTypes.put(int.class.getName(), TYPE_INT);
-        managedTypes.put(Integer.class.getName(), TYPE_INT);
-        managedTypes.put(long.class.getName(), TYPE_LONG);
-        managedTypes.put(Long.class.getName(), TYPE_LONG);
-        managedTypes.put(double.class.getName(), TYPE_DOUBLE);
-        managedTypes.put(Double.class.getName(), TYPE_DOUBLE);
-        managedTypes.put(float.class.getName(), TYPE_FLOAT);
-        managedTypes.put(Float.class.getName(), TYPE_FLOAT);
-        managedTypes.put(boolean.class.getName(), TYPE_BOOL);
-        managedTypes.put(Boolean.class.getName(), TYPE_BOOL);
-        managedTypes.put(ArrayList.class.getName(), TYPE_LIST);
-        managedTypes.put(List.class.getName(), TYPE_LIST);
-        managedTypes.put(java.util.Calendar.class.getName(), TYPE_CALENDAR);
-        managedTypes.put(java.util.GregorianCalendar.class.getName(), TYPE_CALENDAR);
-        managedTypes.put(java.util.Map.class.getName(), TYPE_MAP);
-        managedTypes.put(java.util.HashMap.class.getName(), TYPE_MAP);
-        managedTypes.put(java.util.TreeMap.class.getName(), TYPE_TREE_MAP);
-    }
-
-    public static int getTypeForClassName(String className) {
-        if (managedTypes.containsKey(className)) {
-            return managedTypes.get(className);
-        }
-        return TYPE_UNDEFINED;
-    }
-
-    public static int getTypeForArray(Class clazz) {
-        return getTypeForClass(clazz.getComponentType());
-    }
-
-    public static int getTypeForClass(Class clazz) {
-        if (clazz.isArray()) {
-            return TYPE_ARRAY;
-        }
-        return getTypeForClassName(clazz.getName());
+        MANAGED_TYPES.put(String.class.getName(), TYPE_STRING);
+        MANAGED_TYPES.put(byte.class.getName(), TYPE_BYTE);
+        MANAGED_TYPES.put(Byte.class.getName(), TYPE_BYTE);
+        MANAGED_TYPES.put(char.class.getName(), TYPE_CHAR);
+        MANAGED_TYPES.put(Character.class.getName(), TYPE_CHAR);
+        MANAGED_TYPES.put(short.class.getName(), TYPE_SHORT);
+        MANAGED_TYPES.put(Short.class.getName(), TYPE_SHORT);
+        MANAGED_TYPES.put(int.class.getName(), TYPE_INT);
+        MANAGED_TYPES.put(Integer.class.getName(), TYPE_INT);
+        MANAGED_TYPES.put(long.class.getName(), TYPE_LONG);
+        MANAGED_TYPES.put(Long.class.getName(), TYPE_LONG);
+        MANAGED_TYPES.put(double.class.getName(), TYPE_DOUBLE);
+        MANAGED_TYPES.put(Double.class.getName(), TYPE_DOUBLE);
+        MANAGED_TYPES.put(float.class.getName(), TYPE_FLOAT);
+        MANAGED_TYPES.put(Float.class.getName(), TYPE_FLOAT);
+        MANAGED_TYPES.put(boolean.class.getName(), TYPE_BOOL);
+        MANAGED_TYPES.put(Boolean.class.getName(), TYPE_BOOL);
+        MANAGED_TYPES.put(ArrayList.class.getName(), TYPE_LIST);
+        MANAGED_TYPES.put(List.class.getName(), TYPE_LIST);
+        MANAGED_TYPES.put(java.util.Calendar.class.getName(), TYPE_CALENDAR);
+        MANAGED_TYPES.put(java.util.GregorianCalendar.class.getName(), TYPE_CALENDAR);
+        MANAGED_TYPES.put(java.util.Map.class.getName(), TYPE_MAP);
+        MANAGED_TYPES.put(java.util.HashMap.class.getName(), TYPE_MAP);
+        MANAGED_TYPES.put(java.util.TreeMap.class.getName(), TYPE_TREE_MAP);
     }
 
     public static Object testBean(Class clazz) {
@@ -122,7 +105,7 @@ public class BeanTester {
             if (sb != null) {
                 sb.append(tab(1)).append(tab(indent)).append("NAME:").append(mp.getPropertyName()).append(SEP).append("TYPE:").append(mp.getPropertyType().getName());
             }
-            Object getParameter;
+
             Object setParameter = createParameter(mp.getPropertyType(), classUnderTest, mp.getPropertyName(), creator, sb, indent);
             if (sb != null) {
                 sb.append(SEP).append("VALUE:\"").append(setParameter).append('"');
@@ -139,6 +122,7 @@ public class BeanTester {
                 throw new BeanTestFailException("Cannot invoke " + mp.getSet().getName() + '(' + mp.getPropertyType() + ") where parameter is :" + setParameter.getClass().getName(), e);
             }
 
+            Object getParameter;
             try {
                 getParameter = mp.getGet().invoke(objectUnderTest);
                 if (sb != null) {
@@ -191,7 +175,7 @@ public class BeanTester {
         }
         int type = getTypeForClass(parameterClass);
         if (type != TYPE_UNDEFINED) {
-            return createManagedType(type, parameterClass, creator, sb, indent);
+            return createManagedPrimitiveType(type, parameterClass, creator, sb, indent);
         }
         return testBean(parameterClass, sb, creator, indent + 1);
     }
@@ -203,17 +187,31 @@ public class BeanTester {
             throw new BeanTesterException("Cannot instantiate bean using default constructor:" + clazz.getName(), e);
         }
     }
-    
-    public static Object createManagedType(int type) {
-        return createManagedType(type, null, null, null, 0);
+
+    public static int getTypeForClassName(String className) {
+        if (MANAGED_TYPES.containsKey(className)) {
+            return MANAGED_TYPES.get(className);
+        }
+        return TYPE_UNDEFINED;
     }
 
-    public static Object createManagedType(int type, Creator creator, StringBuilder sb, int indent) {
-        return createManagedType(type, null, creator, sb, indent);
+    public static int getTypeForClass(Class clazz) {
+        if (clazz.isArray()) {
+            return TYPE_ARRAY;
+        }
+        return getTypeForClassName(clazz.getName());
     }
-    
-    public static Object createManagedType(int type, Class subClass, Creator creator, StringBuilder sb, int indent) {
-        switch (type) {
+
+    public static Object createManagedPrimitiveType(int typeId) {
+        return createManagedPrimitiveType(typeId, null, null, null, 0);
+    }
+
+    public static Object createManagedPrimitiveType(int typeId, Creator creator, StringBuilder sb, int indent) {
+        return createManagedPrimitiveType(typeId, null, creator, sb, indent);
+    }
+
+    public static Object createManagedPrimitiveType(int typeId, Class subClass, Creator creator, StringBuilder sb, int indent) {
+        switch (typeId) {
             case TYPE_STRING:
                 return "Str:" + Math.random();
             case TYPE_BYTE:
@@ -241,21 +239,47 @@ public class BeanTester {
             case TYPE_TREE_MAP:
                 return new TreeMap<>();
             case TYPE_ARRAY:
-                return createManagedTypeArray(type, subClass, creator, sb, indent);
+                return createArrayOfType(subClass, creator, sb, indent);
         }
         return null;
     }
 
-    public static Object[] createManagedTypeArray(int type, Class subClass, Creator creator, StringBuilder sb, int indent) {
-        if (subClass == null) {
+    public static Object createArrayOfPrimitiveType(int typeId, Class subClass, Creator creator, StringBuilder sb, int indent) {
+        switch (typeId) {
+            case TYPE_STRING:
+                return new String[]{"Str:" + Math.random(), "Str:" + Math.random()};
+            case TYPE_BYTE:
+                return new byte[]{(byte) unSignedIntInRange(Byte.MAX_VALUE), (byte) unSignedIntInRange(Byte.MAX_VALUE)};
+            case TYPE_CHAR:
+                return new char[]{(char) unSignedIntInRange(Character.MAX_VALUE), (char) unSignedIntInRange(Character.MAX_VALUE)};
+            case TYPE_SHORT:
+                return new short[]{(short) signedIntInRange(Short.MAX_VALUE), (short) signedIntInRange(Short.MAX_VALUE)};
+            case TYPE_INT:
+                return new int[]{signedIntInRange(Integer.MAX_VALUE), signedIntInRange(Integer.MAX_VALUE)};
+            case TYPE_LONG:
+                return new long[]{signedLongInRange(Long.MAX_VALUE), signedLongInRange(Long.MAX_VALUE)};
+            case TYPE_DOUBLE:
+                return new double[]{signedDoubleInRange(Double.MAX_VALUE), signedDoubleInRange(Double.MAX_VALUE)};
+            case TYPE_FLOAT:
+                return new float[]{signedFloatInRange(Float.MAX_VALUE), signedFloatInRange(Float.MAX_VALUE)};
+            case TYPE_BOOL:
+                return new boolean[]{Math.random() > 0.5, Math.random() > 0.5};
+        }
+        return null;
+    }
+
+    public static Object createArrayOfType(Class clazz, Creator creator, StringBuilder sb, int indent) {
+        if (clazz == null) {
             return null;
         }
-        Object[] returnArray = new Object[2];
-        int arrayType = getTypeForArray(subClass);
-        if (arrayType != TYPE_UNDEFINED) {
-            for (int i = 0; i<= returnArray.length; i++) {
-                returnArray[i] = testBean(subClass.getComponentType(), sb, creator, indent + 1);
-            }
+        Class componentType = clazz.getComponentType();
+        int arrayType = getTypeForClass(componentType);
+        if (componentType.isPrimitive()) {
+            return createArrayOfPrimitiveType(arrayType, componentType, creator, sb, indent);
+        }
+        Object[] returnArray = (Object[]) Array.newInstance(componentType, 2);
+        for (int i = 0; i < returnArray.length; i++) {
+            returnArray[i] = testBean(componentType, sb, creator, indent + 1);
         }
         return returnArray;
     }

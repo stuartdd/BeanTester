@@ -5,7 +5,6 @@
  */
 package testtools.testBeans;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,13 +12,15 @@ import java.util.List;
  * @author stuar
  */
 public class ListWithNameValue {
+
     private String name;
     private long value;
     private List<TypicalBean> beanlist;
     private List<Integer> primitiveList;
-    
+
     private TypicalBean[] beanArray;
     private int[] primitiveArray;
+    private String[] stringArray;
 
     public String getName() {
         return name;
@@ -69,5 +70,12 @@ public class ListWithNameValue {
         this.primitiveArray = primitiveArray;
     }
 
-    
-}
+    public String[] getStringArray() {
+        return stringArray;
+    }
+
+    public void setStringArray(String[] stringArray) {
+        this.stringArray = stringArray;
+    }
+
+ }

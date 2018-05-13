@@ -150,23 +150,23 @@ public class BeanTesterTest {
     @Test
     public void testPrimitive() {
         for (int i = 0; i < 100; i++) {
-            echo("String:" + BeanTester.createManagedType(BeanTester.getTypeForClass(String.class)));
-            echo("Integer:" + new Integer(BeanTester.createManagedType(BeanTester.getTypeForClass(int.class)).toString()));
-            echo("Integer:" + new Integer(BeanTester.createManagedType(BeanTester.getTypeForClass(Integer.class)).toString()));
-            echo("Long:" + new Long(BeanTester.createManagedType(BeanTester.getTypeForClass(long.class)).toString()));
-            echo("Long:" + new Long(BeanTester.createManagedType(BeanTester.getTypeForClass(Long.class)).toString()));
-            echo("Boolean:" + new Boolean(BeanTester.createManagedType(BeanTester.getTypeForClass(boolean.class)).toString()));
-            echo("Boolean:" + new Boolean(BeanTester.createManagedType(BeanTester.getTypeForClass(Boolean.class)).toString()));
-            echo("Double:" + new Double(BeanTester.createManagedType(BeanTester.getTypeForClass(double.class)).toString()));
-            echo("Double:" + new Double(BeanTester.createManagedType(BeanTester.getTypeForClass(Double.class)).toString()));
-            echo("Float:" + new Float(BeanTester.createManagedType(BeanTester.getTypeForClass(float.class)).toString()));
-            echo("Float:" + new Float(BeanTester.createManagedType(BeanTester.getTypeForClass(Float.class)).toString()));
-            echo("Byte:" + new Byte(BeanTester.createManagedType(BeanTester.getTypeForClass(byte.class)).toString()));
-            echo("Byte:" + new Byte(BeanTester.createManagedType(BeanTester.getTypeForClass(Byte.class)).toString()));
-            echo("Short:" + new Short(BeanTester.createManagedType(BeanTester.getTypeForClass(short.class)).toString()));
-            echo("Short:" + new Short(BeanTester.createManagedType(BeanTester.getTypeForClass(Short.class)).toString()));
-            echo("Character:" + new Character((char) BeanTester.createManagedType(BeanTester.getTypeForClass(char.class))));
-            echo("Character:" + new Character((Character) BeanTester.createManagedType(BeanTester.getTypeForClass(Character.class))));
+            echo("String:" + BeanTester.createManagedPrimitiveType(BeanTester.getTypeForClass(String.class)));
+            echo("Integer:" + new Integer(BeanTester.createManagedPrimitiveType(BeanTester.getTypeForClass(int.class)).toString()));
+            echo("Integer:" + new Integer(BeanTester.createManagedPrimitiveType(BeanTester.getTypeForClass(Integer.class)).toString()));
+            echo("Long:" + new Long(BeanTester.createManagedPrimitiveType(BeanTester.getTypeForClass(long.class)).toString()));
+            echo("Long:" + new Long(BeanTester.createManagedPrimitiveType(BeanTester.getTypeForClass(Long.class)).toString()));
+            echo("Boolean:" + new Boolean(BeanTester.createManagedPrimitiveType(BeanTester.getTypeForClass(boolean.class)).toString()));
+            echo("Boolean:" + new Boolean(BeanTester.createManagedPrimitiveType(BeanTester.getTypeForClass(Boolean.class)).toString()));
+            echo("Double:" + new Double(BeanTester.createManagedPrimitiveType(BeanTester.getTypeForClass(double.class)).toString()));
+            echo("Double:" + new Double(BeanTester.createManagedPrimitiveType(BeanTester.getTypeForClass(Double.class)).toString()));
+            echo("Float:" + new Float(BeanTester.createManagedPrimitiveType(BeanTester.getTypeForClass(float.class)).toString()));
+            echo("Float:" + new Float(BeanTester.createManagedPrimitiveType(BeanTester.getTypeForClass(Float.class)).toString()));
+            echo("Byte:" + new Byte(BeanTester.createManagedPrimitiveType(BeanTester.getTypeForClass(byte.class)).toString()));
+            echo("Byte:" + new Byte(BeanTester.createManagedPrimitiveType(BeanTester.getTypeForClass(Byte.class)).toString()));
+            echo("Short:" + new Short(BeanTester.createManagedPrimitiveType(BeanTester.getTypeForClass(short.class)).toString()));
+            echo("Short:" + new Short(BeanTester.createManagedPrimitiveType(BeanTester.getTypeForClass(Short.class)).toString()));
+            echo("Character:" + new Character((char) BeanTester.createManagedPrimitiveType(BeanTester.getTypeForClass(char.class))));
+            echo("Character:" + new Character((Character) BeanTester.createManagedPrimitiveType(BeanTester.getTypeForClass(Character.class))));
         }
     }
 
